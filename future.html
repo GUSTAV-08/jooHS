@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Блокчейн Болашағы</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        header {
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        nav {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+        
+        nav a {
+            color: #fa709a;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        
+        nav a:hover {
+            background: #fa709a;
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+        
+        h2 {
+            color: #fa709a;
+            margin: 2rem 0 1rem;
+            font-size: 2rem;
+            border-bottom: 3px solid #fa709a;
+            padding-bottom: 0.5rem;
+        }
+        
+        h3 {
+            color: #fee140;
+            margin: 1.5rem 0 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .media-item {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .media-item:hover {
+            transform: scale(1.05);
+        }
+        
+        .media-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            cursor: pointer;
+        }
+        
+        .media-item iframe {
+            width: 100%;
+            height: 250px;
+        }
+        
+        .caption {
+            background: white;
+            padding: 1rem;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        th {
+            background: #fa709a;
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-size: 1.1rem;
+        }
+        
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        tr:nth-child(even) {
+            background: #fff9e6;
+        }
+        
+        tr:hover {
+            background: #ffe6f0;
+        }
+        
+        ul, ol {
+            margin: 1rem 0 1rem 2rem;
+        }
+        
+        li {
+            margin: 0.5rem 0;
+            font-size: 1.1rem;
+        }
+        
+        .intro-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin: 1rem 0;
+            text-align: justify;
+        }
+        
+        footer {
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .future-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .future-box h3 {
+            color: white;
+            margin-top: 0;
+        }
+        
+        .timeline {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+        }
+        
+        .trend-card {
+            background: white;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-left: 5px solid #fa709a;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🚀 Блокчейн Болашағы</h1>
+        <p>Ертеңгі технологиялық даму</p>
+    </header>
+    
+    <nav>
+        <ul>
+            <li><a href="index.html">Басты Бет</a></li>
+            <li><a href="technology.html">Технология</a></li>
+            <li><a href="applications.html">Қолдану</a></li>
+            <li><a href="future.html">Болашақ</a></li>
+            <li><a href="authors.html">Авторлар</a></li>
+        </ul>
+    </nav>
+    
+    <div class="container">
+        <h2>Блокчейн технологиясының болашағы</h2>
+        
+        <p class="intro-text">
+            Блокчейн технологиясы тез дамып келеді және алдағы жылдары біздің өмірімізді 
+            түбегейлі өзгертуі мүмкін. Жаңа инновациялар мен қолданыстар үнемі пайда болуда, 
+            бұл технологияның әлеуеті шексіз деуге болады.
+        </p>
+        
+        <h2>Болашақ туралы Видеолар</h2>
+        <div class="media-grid">
+            <div class="media-item">
+                <iframe src="https://www.youtube.com/embed/G3psxs3gyf8" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                </iframe>
+                <div class="caption">Блокчейн болашағы</div>
+            </div>
+            
+            <div class="media-item">
+                <iframe src="https://www.youtube.com/embed/VH-bXSAezLw" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                </iframe>
+                <div class="caption">Web3 революциясы</div>
+            </div>
+            
+            <div class="media-item">
+                <iframe src="https://www.youtube.com/embed/YpOmjaocs_E" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                </iframe>
+                <div class="caption">Метавселеннаяда блокчейн</div>
+            </div>
+        </div>
+        
+        <h2>Болашақтың Визуализациясы</h2>
+        <div class="media-grid">
+            <div class="media-item">
+                <a href="https://www.weforum.org/agenda/blockchain/" target="_blank">
+                    <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&h=600&fit=crop" 
+                         alt="Цифрлық болашақ">
+                </a>
+                <div class="caption">Цифрлық болашақ</div>
+            </div>
+            
+            <div class="media-item">
+                <a href="https://www.metaverse.com" target="_blank">
+                    <img src="https://images.unsplash.com/photo-1617802690992-15d93263d3a9?w=800&h=600&fit=crop" 
+                         alt="Метавселенная">
+                </a>
+                <div class="caption">Метавселенная әлемі</div>
+            </div>
+            
+            <div class="media-item">
+                <a href="https://www.gartner.com/en/blockchain" target="_blank">
+                    <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&h=600&fit=crop" 
+                         alt="AI және блокчейн">
+                </a>
+                <div class="caption">AI + Блокчейн</div>
+            </div>
+            
+            <div class="media-item">
+                <a href="https://www.idc.com" target="_blank">
+                    <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&h=600&fit=crop" 
+                         alt="Ақылды қалалар">
+                </a>
+                <div class="caption">Ақылды қалалар</div>
+            </div>
+        </div>
+        
+        <h2>Негізгі трендтер және болжамдар</h2>
+        
+        <div class="trend-card">
+            <h3>🌟 1. Web3 және орталықсыз интернет</h3>
+            <p>
+                Web3 - интернеттің келесі эволюциясы, онда пайдаланушылар өз деректеріне толық бақылауды 
+                иеленеді. Блокчейн технологиясы Web3-тің негізгі компоненті болып табылады.
+            </p>
+            <ul>
+                <li>Орталықсыз әлеуметтік желілер</li>
+                <li>Пайдаланушыларға тиесілі деректер</li>
+                <li>Бір рет кіру жүйесі (SSO) блокчейн арқылы</li>
+                <li>Орталықсыз бұлттық сақтау</li>
+            </ul>
+        </div>
+        
+        <div class="trend-card">
+            <h3>🎮 2. Метавселенная және виртуалды әлемдер</h3>
+            <p>
+                Метавселенная - бұл виртуалды әлем, онда адамдар өзара әрекеттеседі, жұмыс істейді 
+                және ойнайды. Блокчейн осы әлемдегі экономиканың негізі болады.
+            </p>
+            <ul>
+                <li>Виртуалды жылжымайтын мүлік</li>
+                <li>Цифрлық аватарлар және киім</li>
+                <li>Виртуалды іс-шаралар және концерттер</li>
+                <li>Метавселеннаядағы бизнес мүмкіндіктері</li>
+            </ul>
+        </div>
+        
+        <div class="trend-card">
+            <h3>🤖 3. AI + Блокчейн интеграциясы</h3>
+            <p>
+                Жасанды интеллект пен блокчейннің үйлесімі жаңа мүмкіндіктерді ашады: ақылды 
+                шешімдер қабылдау және деректердің мөлдірлігі.
+            </p>
+            <ul>
+                <li>AI үлгілерінің орталықсыз дайындалуы</li>
+                <li>Деректердің шынайылығын растау</li>
+                <li>Автономды смарт-контракттар</li>
+                <li>Болжамды талдау және оптимизация</li>
+            </ul>
+        </div>
+        
+        <h2>Болашақ қолданыстар бойынша болжам</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Сала</th>
+                    <th>Болжам (2025-2030)</th>
+                    <th>Әсері</th>
+                    <th>Мүмкіндіктер</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Қаржы</strong></td>
+                    <td>Цифрлық валюталар толық интеграциясы</td>
+                    <td>Жоғары</td>
+                    <td>CBDC (Орталық банктердің цифрлық валюталары)</td>
+                </tr>
+                <tr>
+                    <td><strong>Денсаулық</strong></td>
+                    <td>Әмбебап медициналық деректер базасы</td>
+                    <td>Орташа</td>
+                    <td>Жеке медицина, телемедицина</td>
+                </tr>
+                <tr>
+                    <td><strong>Білім</strong></td>
+                    <td>Глобалды дипломдар жүйесі</td>
+                    <td>Орташа</td>
+                    <td>Халықаралық білім тану</td>
+                </tr>
+                <tr>
+                    <td><strong>Сайлау</strong></td>
+                    <td>Электронды дауыс беру жүйелері</td>
+                    <td>Жоғары</td>
+                    <td>Мөлдір және қауіпсіз сайлаулар</td>
+                </tr>
+                <tr>
+                    <td><strong>Энергетика</strong></td>
+                    <td>P2P энергия саудасы</td>
+                    <td>Жоғары</td>
+                    <td>Жаңартылатын энергия таралуы</td>
+                </tr>
+                <tr>
+                    <td><strong>IoT</strong></td>
+                    <td>Құрылғылар арасында автономды транзакциялар</td>
+                    <td>Өте жоғары</td>
+                    <td>Ақылды үйлер, қалалар</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h2>Технологиялық даму жоспары</h2>
+        <div class="timeline">
+            <h3>📅 2024-2030 жылдар аралығындағы болжам:</h3>
+            <ol>
+                <li>
+                    <strong>2024-2025</strong>
+                    <ul>
+                        <li>Ethereum 2.0 толық іске қосылуы</li>
+                        <li>Қаржылық институттардың кең қолдануы</li>
+                        <li>NFT нарығының жетілуі</li>
+                        <li>Реттеушілік шеңберлердің нақтылануы</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>2025-2027</strong>
+                    <ul>
+                        <li>Web3 қосымшаларының кең таралуы</li>
+                        <li>Метавселеннаяның негізгі платформалары</li>
+                        <li>Орталық банктердің цифрлық валюталары (CBDC)</li>
+                        <li>AI және блокчейн интеграциясы</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>2027-2030</strong>
+                    <ul>
+                        <li>Толық орталықсыз автономды ұйымдар (DAO)</li>
+                        <li>Блокчейн негізіндегі ұлттық жүйелер</li>
+                        <li>Әмбебап цифрлық иденттілік</li>
+                        <li>Квант-қауіпсіз блокчейндер</li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+        
+        <div class="future-box">
+            <h3>💡 Болашақтың перспективалары</h3>
+            <p>
+                Блокчейн технологиясы келесі онжылдықта біздің қоғамымызды түбегейлі өзгертеді:
+            </p>
+            <ul>
+                <li><strong>Толық мөлдірлік</strong> - үкіметтік және корпоративті деректерге қолжетімділік</li>
+                <li><strong>Күшейтілген құпиялылық</strong> - жеке деректерге толық бақылау</li>
+                <li><strong>Экономикалық инклюзия</strong> - банктік қызметтерге әмбебап қолжетімділік</li>
+                <li><strong>Автоматтандыру</strong> - ортаңшыларсыз тікелей транзакциялар</li>
+                <li><strong>Жаңа экономика</strong> - токендік экономика мен DAO-лар дәуірі</li>
+            </ul>
+        </div>
+        
+        <h2>Келешектегі мүмкіндіктер</h2>
+        <div class="content-section">
+            <h3>Жаңа мамандықтар және кәсіби салалар:</h3>
+            <ul>
+                <li>Блокчейн әзірлеушілер және архитекторлар</li>
+                <li>Смарт-контракт аудиторлары</li>
+                <li>DeFi сарапшылары және стратегтері</li>
+                <li>NFT кураторлары және сарапшылары</li>
+                <li>Криптоэкономистер</li>
+                <li>Блокчейн консультанттары</li>
+                <li>Метавселенная дизайнерлері</li>
+                <li>Web3 өнім менеджерлері</li>
+            </ul>
+        </div>
+        
+        <h2>Болашақтағы қиындықтар</h2>
+        <div class="content-section">
+            <h3>Шешуді қажет ететін мәселелер:</h3>
+            <ol>
+                <li><strong>Масштабталу</strong> - желіні кеңейту қажеттілігі</li>
+                <li><strong>Энергия тиімділігі</strong> - қоршаған ортаға әсерді азайту</li>
+                <li><strong>Реттеу</strong> - заңнамалық базаны құру</li>
+                <li><strong>Қолжетімділік</strong> - техникалық білімді қарапайымдату</li>
+                <li><strong>Өзара әрекет</strong> - түрлі блокчейндер арасында байланыс</li>
+                <li><strong>Қауіпсіздік</strong> - квант компьютерлерге қарсы қорғау</li>
+                <li><strong>Қабылдау</strong> - кең халықтың қабылдауы</li>
+            </ol>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2024 Блокчейн Технологиясы. Барлық құқықтар қорғалған.</p>
+        <p>Болашақ - біз құратынымыз! 🌟</p>
+    </footer>
+</body>
+</html>

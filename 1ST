@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Авторлар туралы</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        header {
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        nav {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+        
+        nav a {
+            color: #a8edea;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        
+        nav a:hover {
+            background: #a8edea;
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+        
+        h2 {
+            color: #667eea;
+            margin: 2rem 0 1rem;
+            font-size: 2rem;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 0.5rem;
+            text-align: center;
+        }
+        
+        h3 {
+            color: #764ba2;
+            margin: 1.5rem 0 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .intro-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin: 1rem 0;
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 10px;
+        }
+        
+        .authors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .author-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: all 0.3s;
+            border: 3px solid transparent;
+        }
+        
+        .author-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+            border-color: #667eea;
+        }
+        
+        .author-image {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            color: white;
+        }
+        
+        .author-info {
+            padding: 2rem;
+        }
+        
+        .author-name {
+            font-size: 1.8rem;
+            color: #667eea;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+        
+        .author-role {
+            font-size: 1.2rem;
+            color: #764ba2;
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+        
+        .author-contribution {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 2px solid #e0e0e0;
+        }
+        
+        .contribution-title {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        
+        ul {
+            margin: 0.5rem 0 0 1.5rem;
+        }
+        
+        li {
+            margin: 0.3rem 0;
+            font-size: 1rem;
+        }
+        
+        .project-info {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+            border-left: 5px solid #667eea;
+        }
+        
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .media-item {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .media-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            cursor: pointer;
+        }
+        
+        .media-item iframe {
+            width: 100%;
+            height: 250px;
+        }
+        
+        .caption {
+            background: white;
+            padding: 1rem;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        th {
+            background: #667eea;
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-size: 1.1rem;
+        }
+        
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        tr:hover {
+            background: #e7f3ff;
+        }
+        
+        footer {
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .contact-info {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        
+        .contact-info a {
+            color: white;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>👥 Жоба Авторлары</h1>
+        <p>Біздің командамен танысыңыз</p>
+    </header>
+    
+    <nav>
+        <ul>
+            <li><a href="index.html">Басты Бет</a></li>
+            <li><a href="technology.html">Технология</a></li>
+            <li><a href="applications.html">Қолдану</a></li>
+            <li><a href="future.html">Болашақ</a></li>
+            <li><a href="authors.html">Авторлар</a></li>
+        </ul>
+    </nav>
+    
+    <div class="container">
+        <p class="intro-text">
+            🎓 Бұл веб-сайт "Блокчейн технологиясы" тақырыбында білім беру мақсатында құрылды. 
+            Біздің команда мүшелері осы жобаны жасау барысында өз үлестерін қосты және 
+            блокчейн технологиясын кеңінен зерттеді.
+        </p>
+        
+        <h2>Біздің Команда</h2>
+        
+        <div class="authors-grid">
+            <div class="author-card">
+                <div class="author-image">👨‍💻</div>
+                <div class="author-info">
+                    <div class="author-name">GUSTAV</div>
+                    <div class="author-role">Жоба жетекшісі және негізгі әзірлеуші</div>
+                    <div class="author-contribution">
+                        <div class="contribution-title">Үлесі:</div>
+                        <ul>
+                            <li>Жобаның жалпы архитектурасын жоспарлау</li>
+                            <li>Басты бет пен навигацияны құру</li>
+                            <li>Технология бетінің контентін дайындау</li>
+                            <li>Барлық беттердің дизайнын әзірлеу</li>
+                            <li>Responsive дизайнды іске асыру</li>
+                            <li>Блокчейн қолданыстары туралы зерттеу жүргізу</li>
+                            <li>Қолдану саласы бетінің мазмұнын жасау</li>
+                            <li>Видео материалдарды іріктеу</li>
+                            <li>Кесте және статистикалық деректерді дайындау</li>
+                            <li>Қазақ тіліне аударма жұмыстары</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="author-card">
+                <div class="author-image">👨‍🔬</div>
+                <div class="author-info">
+                    <div class="author-name">ZHARYLKASYN ERDAULET</div>
+                    <div class="author-role">Техникалық сарапшы</div>
+                    <div class="author-contribution">
+                        <div class="contribution-title">Үлесі:</div>
+                        <ul>
+                            <li>Криптография және консенсус механизмдерін зерттеу</li>
+                            <li>Техникалық мәліметтерді дайындау</li>
+                            <li>Код оптимизациясы және тестілеу</li>
+                            <li>Қауіпсіздік стандарттарын қамтамасыз ету</li>
+                            <li>Кросс-браузерлік үйлесімділікті тексеру</li>
+                            <li>Визуалды дизайн концепциясын әзірлеу</li>
+                            <li>Түс схемаларын таңдау</li>
+                            <li>Пайдаланушы интерфейсін жобалау</li>
+                            <li>Сурет және медиа материалдарды іріктеу</li>
+                            <li>Қолжетімділік стандарттарын сақтау</li>
+                            <li>Блокчейн болашағы туралы болжамдар жасау</li>
+                            <li>Трендтер мен әлеуетті қолданыстарды талдау</li>
+                            <li>Болашақ беті үшін контент дайындау</li>
+                            <li>Салалық статистикамен жұмыс жасау</li>
+                            <li>Білім беру материалдарын құрастыру</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+           
+                            
+        <h2>Жоба туралы ақпарат</h2>
+        <div class="project-info">
+            <h3>📋 Жоба сипаттамасы:</h3>
+            <p>
+                Бұл веб-сайт блокчейн технологиясын кеңінен түсіндіру және оның әртүрлі 
+                қолдану салаларын көрсету мақсатында жасалды. Сайт 5 негізгі бөлімнен тұрады 
+                және толық адаптивті дизайнға ие.
+            </p>
+            
+            <h3>🎯 Мақсаттар:</h3>
+            <ul>
+                <li>Блокчейн технологиясы туралы түсінікті ақпарат беру</li>
+                <li>Қазақ тілінде сапалы білім беру контентін ұсыну</li>
+                <li>Интерактивті және көрнекі оқыту материалдарын қамтамасыз ету</li>
+                <li>Болашақ мамандар мен қызығушылар үшін пайдалы ресурс болу</li>
+                <li>Заманауи веб-технологияларды қолдану дағдысын дамыту</li>
+            </ul>
+            
+            <h3>🛠 Қолданылған технологиялар:</h3>
+            <ul>
+                <li>HTML5 - веб-беттердің құрылымы</li>
+                <li>CSS3 - дизайн және анимация</li>
+                <li>Responsive Design - барлық құрылғыларға бейімделу</li>
+                <li>Gradient фондар - көрнекі безендіру</li>
+                <li>YouTube API - видео интеграциясы</li>
+                <li>External Links - сыртқы ресурстарға сілтемелер</li>
+            </ul>
+        </div>
+        
+        
+        <h2>Жоба Суреттері</h2>
+        <div class="media-grid">
+            <div class="media-item">
+                <a href="https://www.github.com" target="_blank">
+                    <img src="https://tse3.mm.bing.net/th/id/OIP.TCmYeuKnKoPiGYjyc8b13AHaGL?rs=1&pid=ImgDetMain&o=7&rm=3" 
+                         alt="Командалық жұмыс">
+                </a>
+                <div class="caption">Командалық жұмыс процесі</div>
+            </div>
+            
+            <div class="media-item">
+                <a href="https://www.notion.so" target="_blank">
+                    <img src="https://www.shutterstock.com/shutterstock/photos/2660680461/display_1500/stock-vector-teamwork-collaboration-concept-with-people-assembling-puzzle-pieces-together-demonstrating-2660680461.jpg" 
+                         alt="Жоспарлау">
+                </a>
+                <div class="caption">Жоба жоспарлау</div>
+            </div>
+            
+            <div class="media-item">
+                <a href="https://www.figma.com" target="_blank">
+                    <img src="https://images.unsplash.com/photo-1559028012-481c04fa702d?w=800&h=600&fit=crop" 
+                         alt="Дизайн процесі">
+                </a>
+                <div class="caption">Дизайн әзірлеу</div>
+            </div>
+        </div>
+        
+        <h2>Видео Материалдар</h2>
+        <div class="media-grid">
+            <div class="media-item">
+                <iframe src="https://www.youtube.com/embed/gyMwXuJrbJQ" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                </iframe>
+                <div class="caption">Командалық жұмыс туралы</div>
+            </div>
+            
+            <div class="media-item">
+                <iframe src="https://www.youtube.com/embed/8KkW8Ul7Q1I" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                </iframe>
+                <div class="caption">Веб-дамыту негіздері</div>
+            </div>
+        </div>
+        
+        <div class="contact-info">
+            <h3>📧 Байланыс ақпараты</h3>
+            <p>Жоба туралы сұрақтарыңыз болса, бізбен хабарласыңыз:</p>
+            <p><strong>Email:</strong> blockchain.project@example.com</p>
+            <p><strong>GitHub:</strong> <a href="https://github.com/blockchain-team" target="_blank">github.com/blockchain-team</a></p>
+            <p><strong>Сайт:</strong> www.blockchain-kz.edu</p>
+        </div>
+        
+        <div class="project-info">
+            <h3>🙏 Алғыс сөз</h3>
+            <p>
+                Біз бұл жобаны жасау барысында көптеген ресурстарды қолдандық және әртүрлі 
+                көздерден ақпарат алдық. Блокчейн қауымдастығына, ашық кодты әзірлеушілерге 
+                және білім беру платформаларына алғысымызды білдіреміз. Сондай-ақ, біздің 
+                оқытушыларымыз бен менторларымызға олардың қолдауы мен бағыт-бағдарлары үшін 
+                ризашылығымызды білдіреміз.
+            </p>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2024 Блокчейн Технологиясы Жобасы. Барлық құқықтар қорғалған.</p>
+        <p>Құрастырушылар: Әмір, Айгерім, Дастан, Динара, Ержан</p>
+        <p>Білім - ұлттың болашағы! 📚</p>
+    </footer>
+</body>
+</html>
