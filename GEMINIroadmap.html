@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>ROADMAP 2026 — Gustav & Ketsu</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&family=Playfair+Display:wght@400;700;900&family=Cormorant+Garamond:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --aitu-bg: #050d1a;
+    --aitu-primary: #00c8ff;
+    --aitu-secondary: #0055aa;
+    --aitu-accent: #00ff99;
+    --aitu-dim: rgba(0,200,255,0.12);
+    --mnu-bg: #140505;
+    --mnu-primary: #ffd700;
+    --mnu-secondary: #cc2200;
+    --mnu-accent: #ff6b35;
+    --mnu-dim: rgba(255,215,0,0.10);
+  }
+
+  html, body {
+    width: 100%; height: 100%; overflow: hidden;
+    background: #000;
+    /* Убираем синее выделение при тапе на мобилках */
+    -webkit-tap-highlight-color: transparent; 
+  }
+
+  /* ── DECK WRAPPER ─────────────────────────────────────────── */
+  .deck {
+    width: 100%; height: 100%;
+    position: relative;
+  }
+
+  /* ── SLIDE BASE ───────────────────────────────────────────── */
+  .slide {
+    position: absolute; inset: 0;
+    opacity: 0; pointer-events: none;
+    transition: opacity .4s ease;
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    padding: 48px 60px;
+    /* Разрешаем вертикальный скролл, если контент не влезает */
+    overflow-y: auto; overflow-x: hidden;
+  }
+  .slide.active { opacity: 1; pointer-events: all; z-index: 10; }
+
+  /* ── AITU SLIDES ──────────────────────────────────────────── */
+  .aitu-slide { background: var(--aitu-bg); }
+  .aitu-slide::before {
+    content: ''; position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 80% 50%, rgba(0,80,180,.35) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 10% 80%, rgba(0,200,255,.10) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  /* Matrix rain canvas */
+  .matrix-canvas {
+    position: fixed; inset: 0;
+    opacity: .13; pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── MNU SLIDES ───────────────────────────────────────────── */
+  .mnu-slide { background: var(--mnu-bg); }
+  .mnu-slide::before {
+    content: ''; position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 20% 50%, rgba(180,20,0,.4) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 90% 80%, rgba(255,215,0,.08) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .scales-bg {
+    position: absolute; right: -40px; bottom: -40px;
+    width: 420px; height: 420px; opacity: .05; pointer-events: none;
+  }
+
+  /* ── TITLE SLIDE ──────────────────────────────────────────── */
+  #slide-0 { background: #000; flex-direction: row; padding: 0; justify-content: stretch; }
+  .title-half {
+    flex: 1; height: 100%;
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    padding: 50px 40px; gap: 16px; position: relative;
+  }
+  .title-half.left { background: linear-gradient(160deg, #020f22 0%, #04214d 60%, #061a38 100%); border-right: 2px solid #00c8ff44; }
+  .title-half.right { background: linear-gradient(160deg, #200404 0%, #4a0a0a 60%, #200404 100%); border-left: 2px solid #ffd70044; }
+  .title-main { font-family: 'Orbitron', monospace; font-size: clamp(2rem, 4vw, 3.4rem); font-weight: 900; letter-spacing: .08em; text-align: center; color: #fff; line-height: 1.15; }
+  .title-sub { font-family: 'Share Tech Mono', monospace; font-size: .9rem; color: rgba(255,255,255,.45); text-align: center; letter-spacing: .12em; }
+  .badge-aitu { font-family: 'Orbitron', monospace; font-size: clamp(1.1rem, 2vw, 1.5rem); font-weight: 700; color: var(--aitu-primary); border: 1.5px solid var(--aitu-primary); padding: 8px 20px; border-radius: 4px; letter-spacing: .1em; box-shadow: 0 0 18px rgba(0,200,255,.25); }
+  .badge-mnu { font-family: 'Playfair Display', serif; font-size: clamp(1.1rem, 2vw, 1.5rem); font-weight: 700; color: var(--mnu-primary); border: 1.5px solid var(--mnu-primary); padding: 8px 20px; border-radius: 4px; letter-spacing: .06em; box-shadow: 0 0 18px rgba(255,215,0,.2); }
+  .person-tag { font-family: 'Share Tech Mono', monospace; font-size: .8rem; opacity: .55; color: #fff; letter-spacing: .14em; text-align: center; }
+  .spec-tag-a { font-family: 'Share Tech Mono', monospace; font-size: .85rem; color: var(--aitu-accent); letter-spacing: .1em; margin-top: 4px; text-align: center; }
+  .spec-tag-m { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: var(--mnu-accent); letter-spacing: .06em; margin-top: 4px; text-align: center; }
+  
+  .divider-center {
+    position: absolute; left: 50%; top: 10%; bottom: 10%; width: 2px;
+    background: linear-gradient(to bottom, transparent, #ffffff22 30%, #ffffff22 70%, transparent);
+    transform: translateX(-50%); z-index: 10;
+  }
+
+  /* ── CONTENT LAYOUT ───────────────────────────────────────── */
+  .content { position: relative; z-index: 5; width: 100%; max-width: 1060px; margin: auto; }
+  .two-col { display: grid; grid-template-columns: 1.1fr 1fr; gap: 48px; align-items: start; }
+  .shared-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+
+  /* ── TYPOGRAPHY ── AITU ───────────────────────────────────── */
+  .aitu-slide .slide-title { font-family: 'Orbitron', monospace; font-size: clamp(1.4rem, 2.8vw, 2.1rem); font-weight: 700; color: var(--aitu-primary); letter-spacing: .08em; margin-bottom: 8px; line-height: 1.2; }
+  .aitu-slide .slide-subtitle { font-family: 'Share Tech Mono', monospace; font-size: .8rem; color: rgba(0,200,255,.5); letter-spacing: .18em; text-transform: uppercase; margin-bottom: 28px; }
+  .aitu-slide .divider { width: 100%; height: 1px; background: linear-gradient(to right, var(--aitu-primary), transparent); margin-bottom: 28px; opacity: .4; }
+  .aitu-slide ul { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+  .aitu-slide li { font-family: 'Share Tech Mono', monospace; font-size: clamp(.85rem, 1.3vw, 1rem); color: rgba(210,235,255,.85); padding-left: 20px; position: relative; line-height: 1.55; }
+  .aitu-slide li::before { content: '▸'; position: absolute; left: 0; color: var(--aitu-primary); font-size: .7rem; top: .15em; }
+  .aitu-slide .highlight { color: var(--aitu-primary); font-weight: bold; }
+  .aitu-slide .accent { color: var(--aitu-accent); }
+  .aitu-slide .warn { color: #ffcc00; }
+
+  /* ── TYPOGRAPHY ── MNU ────────────────────────────────────── */
+  .mnu-slide .slide-title { font-family: 'Playfair Display', serif; font-size: clamp(1.5rem, 2.8vw, 2.2rem); font-weight: 900; color: var(--mnu-primary); letter-spacing: .02em; margin-bottom: 8px; line-height: 1.2; }
+  .mnu-slide .slide-subtitle { font-family: 'Cormorant Garamond', serif; font-size: .9rem; color: rgba(255,215,0,.45); letter-spacing: .12em; text-transform: uppercase; margin-bottom: 26px; }
+  .mnu-slide .divider { width: 100%; height: 1px; background: linear-gradient(to right, var(--mnu-primary), transparent); margin-bottom: 26px; opacity: .4; }
+  .mnu-slide ul { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+  .mnu-slide li { font-family: 'Cormorant Garamond', serif; font-size: clamp(1rem, 1.45vw, 1.15rem); color: rgba(255,240,210,.85); padding-left: 22px; position: relative; line-height: 1.55; }
+  .mnu-slide li::before { content: '⚖'; position: absolute; left: 0; color: var(--mnu-primary); font-size: .75rem; top: .1em; }
+  .mnu-slide .highlight { color: var(--mnu-primary); font-weight: bold; }
+  .mnu-slide .accent { color: var(--mnu-accent); }
+  .mnu-slide .warn { color: #ff9966; }
+
+  /* ── SHARED SLIDES ────────────────────────────────────────── */
+  .shared-slide { background: #080808; }
+  .shared-slide::before {
+    content: ''; position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 50% 60% at 20% 40%, rgba(0,80,160,.2) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 60% at 80% 60%, rgba(140,10,0,.2) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .shared-slide .slide-title { font-family: 'Orbitron', monospace; font-size: clamp(1.3rem, 2.5vw, 1.9rem); font-weight: 700; color: #fff; letter-spacing: .06em; margin-bottom: 8px; }
+  .shared-slide .slide-subtitle { font-family: 'Share Tech Mono', monospace; font-size: .78rem; color: rgba(255,255,255,.35); letter-spacing: .18em; text-transform: uppercase; margin-bottom: 24px; }
+  .shared-slide .divider { width: 100%; height: 1px; background: linear-gradient(to right, #0055aa, #880000); margin-bottom: 24px; opacity: .6; }
+  .col-head-a { font-family: 'Orbitron', monospace; font-size: .85rem; font-weight: 700; color: var(--aitu-primary); letter-spacing: .1em; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid rgba(0,200,255,.25); }
+  .col-head-m { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--mnu-primary); letter-spacing: .04em; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid rgba(255,215,0,.25); }
+  
+  .col-a ul, .col-m ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .col-a li { font-family: 'Share Tech Mono', monospace; font-size: clamp(.8rem, 1.2vw, .95rem); color: rgba(200,230,255,.8); padding-left: 18px; position: relative; line-height: 1.5; }
+  .col-a li::before { content: '▸'; position: absolute; left: 0; color: var(--aitu-primary); font-size: .65rem; top: .2em; }
+  .col-m li { font-family: 'Cormorant Garamond', serif; font-size: clamp(.95rem, 1.35vw, 1.1rem); color: rgba(255,240,200,.8); padding-left: 20px; position: relative; line-height: 1.5; }
+  .col-m li::before { content: '⚖'; position: absolute; left: 0; color: var(--mnu-primary); font-size: .7rem; top: .1em; }
+
+  /* ── MISC COMPONENTS ──────────────────────────────────────── */
+  .timeline { position: relative; display: flex; flex-direction: column; gap: 0; padding-left: 28px; }
+  .timeline::before { content: ''; position: absolute; left: 6px; top: 8px; bottom: 8px; width: 2px; background: linear-gradient(to bottom, var(--aitu-primary), transparent); }
+  .timeline.mnu-tl::before { background: linear-gradient(to bottom, var(--mnu-primary), transparent); }
+  .tl-item { position: relative; padding: 0 0 18px 0; }
+  .tl-item::before { content: ''; position: absolute; left: -24px; top: 6px; width: 10px; height: 10px; border-radius: 50%; background: var(--aitu-primary); box-shadow: 0 0 8px var(--aitu-primary); }
+  .timeline.mnu-tl .tl-item::before { background: var(--mnu-primary); box-shadow: 0 0 8px var(--mnu-primary); }
+  .tl-date { font-family: 'Share Tech Mono', monospace; font-size: .75rem; font-weight: bold; color: var(--aitu-primary); letter-spacing: .1em; margin-bottom: 3px; }
+  .timeline.mnu-tl .tl-date { font-family: 'Cormorant Garamond', serif; font-size: .9rem; font-weight: 600; color: var(--mnu-primary); }
+  .tl-text { font-family: 'Share Tech Mono', monospace; font-size: .85rem; color: rgba(200,230,255,.75); line-height: 1.45; }
+  .timeline.mnu-tl .tl-text { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: rgba(255,240,200,.75); }
+
+  .checklist { display: flex; flex-direction: column; gap: 10px; }
+  .chk-item { display: flex; align-items: flex-start; gap: 12px; padding: 10px 14px; border-radius: 5px; border: 1px solid transparent; }
+  .chk-item.a { background: rgba(0,200,255,.05); border-color: rgba(0,200,255,.15); }
+  .chk-item.m { background: rgba(255,215,0,.04); border-color: rgba(255,215,0,.15); }
+  .chk-icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+  .chk-text { font-family: 'Share Tech Mono', monospace; font-size: .85rem; color: rgba(210,235,255,.8); line-height: 1.5; }
+  .chk-text.m { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: rgba(255,240,200,.8); }
+  .chk-note { font-size: .75rem; color: rgba(255,255,255,.45); margin-top: 2px; display: block; }
+
+  .date-pill-a { display: inline-block; font-family: 'Orbitron', monospace; font-size: .72rem; font-weight: 700; background: rgba(0,200,255,.12); border: 1px solid rgba(0,200,255,.4); color: var(--aitu-primary); padding: 3px 10px; border-radius: 3px; letter-spacing: .08em; margin-bottom: 4px; }
+  .date-pill-m { display: inline-block; font-family: 'Cormorant Garamond', serif; font-size: .82rem; font-weight: 600; background: rgba(255,215,0,.08); border: 1px solid rgba(255,215,0,.35); color: var(--mnu-primary); padding: 3px 10px; border-radius: 3px; letter-spacing: .06em; margin-bottom: 4px; }
+
+  .month-tag-a { font-family: 'Orbitron', monospace; font-size: .65rem; font-weight: 700; color: var(--aitu-accent); background: rgba(0,255,153,.08); border: 1px solid rgba(0,255,153,.25); display: inline-block; padding: 3px 10px; border-radius: 2px; letter-spacing: .2em; margin-bottom: 14px; }
+  .month-tag-m { font-family: 'Cormorant Garamond', serif; font-size: .8rem; font-weight: 600; color: var(--mnu-accent); background: rgba(255,107,53,.08); border: 1px solid rgba(255,107,53,.25); display: inline-block; padding: 3px 12px; border-radius: 2px; letter-spacing: .14em; margin-bottom: 14px; }
+
+  .code-block { background: rgba(0,0,0,.5); border: 1px solid rgba(0,200,255,.2); border-left: 3px solid var(--aitu-primary); border-radius: 4px; padding: 14px 16px; font-family: 'Share Tech Mono', monospace; font-size: .85rem; color: rgba(0,200,255,.8); line-height: 1.7; }
+  .quote-block { background: rgba(0,0,0,.4); border: 1px solid rgba(255,215,0,.18); border-left: 3px solid var(--mnu-primary); border-radius: 4px; padding: 14px 18px; font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: rgba(255,240,200,.75); font-style: italic; line-height: 1.65; }
+
+  /* ── NAV ──────────────────────────────────────────────────── */
+  .nav {
+    position: fixed; bottom: 28px; right: 32px;
+    z-index: 1000;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .nav-btn {
+    font-family: 'Orbitron', monospace; font-size: .72rem;
+    background: rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,.3);
+    color: rgba(255,255,255,.9); padding: 10px 18px;
+    border-radius: 4px; cursor: pointer; letter-spacing: .1em;
+    transition: all .2s; backdrop-filter: blur(5px);
+  }
+  .nav-btn:hover, .nav-btn:active { background: rgba(255,255,255,.2); color: #fff; border-color: #fff; }
+  .nav-counter { font-family: 'Share Tech Mono', monospace; font-size: .8rem; color: rgba(255,255,255,.6); min-width: 44px; text-align: center; font-weight: bold; background: rgba(0,0,0,0.5); padding: 5px 10px; border-radius: 4px; }
+  .progress-bar { position: fixed; top: 0; left: 0; width: 100%; height: 3px; background: transparent; z-index: 999; }
+  .progress-fill { height: 100%; background: linear-gradient(to right, #00c8ff, #ffd700); transition: width .4s ease; }
+
+  /* ── ИНТЕРАКТИВНОЕ ВИДЕО (10 СЛАЙД) ──────────────────────── */
+  .video-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+    margin-top: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 2px solid rgba(255, 215, 0, 0.4);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.15);
+  }
+  .video-container iframe {
+    position: absolute; top: 0; left: 0;
+    width: 100%; height: 100%;
+  }
+
+  /* ══════════════════════════════════════════════════════════
+     MOBILE ADAPTABILITY (АДАПТАЦИЯ ДЛЯ ТЕЛЕФОНОВ)
+  ═══════════════════════════════════════════════════════════ */
+  @media (max-width: 768px) {
+    .slide {
+      padding: 30px 20px 100px 20px; /* Снизу отступ под кнопки навигации */
+      justify-content: flex-start;   /* Контент начинается сверху, а не центрируется */
+    }
+    .content {
+      margin-top: 10px;
+    }
+    
+    /* Сбрасываем сетки в одну колонку */
+    .two-col, .shared-two-col { 
+      grid-template-columns: 1fr; 
+      gap: 30px; 
+    }
+    
+    /* Титульный слайд друг под другом */
+    #slide-0 { flex-direction: column; }
+    .title-half { padding: 30px 15px; border: none !important; }
+    .divider-center {
+      width: 80%; height: 2px; 
+      left: 10%; top: 50%; bottom: auto;
+      transform: translateY(-50%);
+      background: linear-gradient(to right, transparent, #ffffff44 30%, #ffffff44 70%, transparent);
+    }
+    
+    /* Таблицы скроллятся горизонтально если не влезают */
+    .table-responsive { overflow-x: auto; padding-bottom: 10px; }
+    
+    /* Навигация фиксируется по всей ширине внизу */
+    .nav {
+      bottom: 0; right: 0; left: 0;
+      justify-content: space-between;
+      padding: 15px 20px;
+      background: linear-gradient(to top, rgba(0,0,0,0.95) 50%, transparent);
+      gap: 10px;
+    }
+    .nav-btn {
+      flex: 1; text-align: center;
+      padding: 14px 10px; font-size: 0.8rem;
+    }
+    
+    /* Мелкие правки шрифтов */
+    .slide-title { font-size: 1.5rem !important; }
+    .stat-value { font-size: 1.3rem !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="deck" id="deck">
+
+  <div class="slide" id="slide-0">
+    <div class="title-half left">
+      <div class="person-tag">// GUSTAV — ЕРДАУЛЕТ</div>
+      <div class="badge-aitu">AITU</div>
+      <div class="title-main" style="color:#00c8ff;">SOFTWARE<br>ENGINEERING</div>
+      <div class="spec-tag-a">В057 · ENT-1: 91 pts</div>
+    </div>
+    <div class="divider-center"></div>
+    <div class="title-half right">
+      <div class="person-tag">// KETSU — ЭЛЬВИРА</div>
+      <div class="badge-mnu">MNU</div>
+      <div class="title-main" style="color:#ffd700;font-family:'Playfair Display',serif;">Юрис-<br>пруденция</div>
+      <div class="spec-tag-m">Право · ENT-1: 108 pts</div>
+    </div>
+    <div style="position:absolute;bottom:20px;left:50%;transform:translateX(-50%);text-align:center;width:100%; display:none;">
+      <div style="font-family:'Share Tech Mono',monospace;font-size:.68rem;color:rgba(255,255,255,.25);letter-spacing:.2em;">ROADMAP · SUMMER 2026 · ASTANA</div>
+    </div>
+  </div>
+
+  <div class="slide aitu-slide">
+    <canvas class="matrix-canvas" id="matrix"></canvas>
+    <div class="content">
+      <div class="month-tag-a">// ПРОФИЛЬ АБИТУРИЕНТА</div>
+      <div class="slide-title">Astana IT University (AITU)</div>
+      <div class="slide-subtitle">Target: B057 · Software Engineering · Грант</div>
+      <div class="divider"></div>
+      <div class="two-col">
+        <ul>
+          <li><span class="highlight">ЕНТ-1:</span> <span class="accent">91 балл</span> — база зафиксирована</li>
+          <li><span class="highlight">Цель ЕНТ-2:</span> <span class="warn">100–110+ баллов</span> — для гарантии гранта</li>
+          <li><span class="highlight">Срок обучения:</span> 3 года (триместровая система)</li>
+          <li><span class="highlight">Язык обучения:</span> английский (100%)</li>
+          <li><span class="highlight">Кампус:</span> территория EXPO, рядом Mega Silk Way</li>
+          <li><span class="highlight">Военная кафедра:</span> есть (блок C1.3.350) — Приписное свидетельство обязательно</li>
+        </ul>
+        <div>
+          <div class="code-block">
+            СПЕЦИАЛЬНОСТЬ: В057<br>
+            > IT / Software Engineering<br>
+            <br>
+            КОНКУРС ГРАНТОВ 2025:<br>
+            > Проходной балл ~105+<br>
+            > Кол-во грантов: ограничено<br>
+            <br>
+            ДОП. ФИЛЬТР:<br>
+            > AET (внутренний экзамен)<br>
+            > Обязателен для грант-листа
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide aitu-slide">
+    <canvas class="matrix-canvas" id="matrix2"></canvas>
+    <div class="content">
+      <div class="month-tag-a">// ИЮНЬ 2026</div>
+      <div class="slide-title">AET — Обязательный внутренний экзамен</div>
+      <div class="slide-subtitle">AITU Excellence Test · Допуск к конкурсу грантов</div>
+      <div class="divider"></div>
+      <div class="two-col">
+        <ul>
+          <li><span class="warn">⚠ Дедлайн:</span> до <span class="highlight">1 июля 2026</span> года включительно</li>
+          <li><span class="highlight">Формат:</span> онлайн из дома, жёсткий двойной прокторинг</li>
+          <li><span class="highlight">Прокторинг:</span> камера ноутбука + камера телефона одновременно</li>
+          <li><span class="highlight">Стоимость:</span> <span class="accent">3 000 тенге</span> за попытку</li>
+          <li><span class="highlight">Регистрация:</span> на официальном портале AITU (aitu.edu.kz)</li>
+          <li><span class="warn">Важно:</span> без сданного AET — нет допуска к грантовому конкурсу</li>
+        </ul>
+        <div>
+          <div class="code-block" style="margin-bottom:16px;">
+            ПОРОГИ ПРОХОЖДЕНИЯ:<br><br>
+            Английский язык:<br>
+            &nbsp;&nbsp;> MIN: <span style="color:#00ff99;">30 / 50 баллов</span><br><br>
+            Информатика + Логика:<br>
+            &nbsp;&nbsp;> MIN: <span style="color:#00ff99;">25 / 50 баллов</span>
+          </div>
+          <ul>
+            <li><span class="highlight">Фокус подготовки:</span> векторы, уравнения, свойства степеней. Это закроет обидные потери баллов.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide aitu-slide">
+    <canvas class="matrix-canvas" id="matrix3"></canvas>
+    <div class="content">
+      <div class="month-tag-a">// ИЮЛЬ 2026</div>
+      <div class="slide-title">ЕНТ-2 и Подача на грант</div>
+      <div class="slide-subtitle">Решающий рывок · eGov.kz · Приоритет #1 — AITU</div>
+      <div class="divider"></div>
+      <div class="two-col">
+        <div class="timeline">
+          <div class="tl-item">
+            <div class="tl-date">7 ИЮЛЯ 2026</div>
+            <div class="tl-text">Сдача второго (основного) ЕНТ.<br>Цель: <strong style="color:#00c8ff;">100–110+ баллов</strong>.</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-date">до 13 ИЮЛЯ</div>
+            <div class="tl-text">Обязательно: получить <strong style="color:#00ff99;">ЭЦП</strong>. Без неё заявку не подать.</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-date">13–20 ИЮЛЯ</div>
+            <div class="tl-text">Официальный приём заявлений на грант через <strong style="color:#00c8ff;">eGov.kz</strong>.</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-date">В ЗАЯВКЕ</div>
+            <div class="tl-text">Группа: <strong style="color:#00c8ff;">В057</strong>. Приоритет №1: <strong style="color:#00ff99;">Astana IT University</strong>.</div>
+          </div>
+        </div>
+        <ul>
+          <li><span class="highlight">Онлайн-подача:</span> через eGov.kz — не нужно ехать из Шымкента.</li>
+          <li><span class="highlight">AET-результат</span> автоматически привязывается к профилю.</li>
+          <li>Сертификат ЕНТ: система учтёт <span class="warn">лучший результат</span> из двух попыток.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide mnu-slide">
+    <svg class="scales-bg" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <line x1="100" y1="10" x2="100" y2="190" stroke="white" stroke-width="3"/>
+      <line x1="20" y1="60" x2="180" y2="60" stroke="white" stroke-width="3"/>
+      <circle cx="20" cy="90" r="30" stroke="white" stroke-width="2.5"/>
+      <circle cx="180" cy="90" r="30" stroke="white" stroke-width="2.5"/>
+      <line x1="20" y1="60" x2="20" y2="90" stroke="white" stroke-width="2"/>
+      <line x1="180" y1="60" x2="180" y2="90" stroke="white" stroke-width="2"/>
+    </svg>
+    <div class="content">
+      <div class="month-tag-m">// ПРОФИЛЬ АБИТУРИЕНТА</div>
+      <div class="slide-title">Maqsut Narikbayev University (MNU)</div>
+      <div class="slide-subtitle">Target: Юриспруденция · Государственный грант · Астана</div>
+      <div class="divider"></div>
+      <div class="two-col">
+        <ul>
+          <li><span class="highlight">ЕНТ-1:</span> <span class="accent">108 баллов</span> — сильный старт</li>
+          <li><span class="highlight">Цель ЕНТ-2:</span> <span class="warn">120+ баллов</span> — для гарантии гранта</li>
+          <li><span class="highlight">Профиль вуза:</span> топовый гуманитарно-правовой университет страны</li>
+          <li><span class="highlight">Дресс-код:</span> строгий деловой на всех занятиях (обязателен)</li>
+          <li><span class="highlight">Honor Code:</span> кодекс честности — обязательное условие</li>
+          <li><span class="highlight">Военная кафедра:</span> есть</li>
+        </ul>
+        <div class="quote-block">
+          На специальность «Переводческое дело» в MNU допускались абитуриенты с баллом <strong style="color:#ffd700;">не ниже 120</strong>. Юриспруденция — аналогичный уровень конкуренции. Цель в 120+ — абсолютно оправдана.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide mnu-slide">
+    <div class="content">
+      <div class="month-tag-m">// ИЮНЬ 2026</div>
+      <div class="slide-title">Внутренний грант MNU + Подготовка</div>
+      <div class="slide-subtitle">Стратегия «двойной страховки» · Интенсивный месяц</div>
+      <div class="divider"></div>
+      <div class="two-col">
+        <ul>
+          <li><span class="warn">⚠ Дедлайн:</span> до <span class="highlight">30 июня 2026</span> (включительно)</li>
+          <li><span class="highlight">Действие:</span> подать заявку на <span class="accent">внутренний образовательный грант MNU</span> через официальный сайт.</li>
+          <li>108 баллов — отличная база для корпоративной стипендии MNU, если на госгрант не хватит нескольких очков.</li>
+        </ul>
+        <ul>
+          <li><span class="highlight">Режим июня:</span> интенсивная подготовка ко второму ЕНТ.</li>
+          <li><span class="accent">Разгрузка:</span> воскресенье — законный выходной. Прогулки обязательны. Выгорание = враг результата.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide mnu-slide">
+    <div class="content">
+      <div class="month-tag-m">// ИЮЛЬ 2026</div>
+      <div class="slide-title">ЕНТ-2 и Подача на госгрант</div>
+      <div class="slide-subtitle">Финальная битва · eGov.kz · MNU — Приоритет #1</div>
+      <div class="divider"></div>
+      <div class="two-col">
+        <div class="timeline mnu-tl">
+          <div class="tl-item">
+            <div class="tl-date">Начало ИЮЛЯ</div>
+            <div class="tl-text">Сдача второго ЕНТ. Конкурс жёсткий. Цель: <strong style="color:#ffd700;">120+ баллов</strong>.</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-date">до 13 ИЮЛЯ</div>
+            <div class="tl-text">Обновить ключи <strong style="color:#ffd700;">ЭЦП</strong> для доступа к eGov.kz.</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-date">13–20 ИЮЛЯ</div>
+            <div class="tl-text">Подача заявления через <strong style="color:#ffd700;">eGov.kz</strong> или виртуальную приёмную MNU.</div>
+          </div>
+        </div>
+        <ul>
+          <li><span class="highlight">Онлайн-подача:</span> никуда ехать не нужно — всё через портал</li>
+          <li>Система автоматически выберет <span class="warn">лучший результат</span> из двух ЕНТ</li>
+          <li><span class="accent">Параллельно:</span> проверь статус внутреннего гранта MNU.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide shared-slide">
+    <div class="content">
+      <div style="font-family:'Orbitron',monospace;font-size:.65rem;color:rgba(255,255,255,.3);letter-spacing:.2em;margin-bottom:14px;">// АВГУСТ 2026 · ОБА АБИТУРИЕНТА</div>
+      <div class="slide-title">Результаты, Медосмотр и Зачисление</div>
+      <div class="slide-subtitle">Синхронный финальный этап · Астана ждёт</div>
+      <div class="divider"></div>
+      <div class="shared-two-col">
+        <div class="col-a">
+          <div class="col-head-a">⬡ ГУСТАВ / AITU</div>
+          <ul>
+            <li><span class="date-pill-a">до 10 АВГ</span><br>Публикация списков грантников.</li>
+            <li><span class="date-pill-a">10–15 АВГ</span><br>Прохождение медосмотра (075/у + флюорография).</li>
+            <li><span class="date-pill-a">до 25 АВГ</span><br>Сдать оригиналы документов в Астане.</li>
+          </ul>
+        </div>
+        <div class="col-m">
+          <div class="col-head-m">⚖ КЕТСУ / MNU</div>
+          <ul>
+            <li><span class="date-pill-m">до 10 АВГ</span><br>Публикация результатов конкурса грантов.</li>
+            <li><span class="date-pill-m">10–15 АВГ</span><br>Медосмотр (075/у + флюорография).</li>
+            <li><span class="date-pill-m">до 25 АВГ</span><br>Сдать оригиналы. Подготовить деловой гардероб.</li>
+          </ul>
+        </div>
+      </div>
+      <div style="margin-top:20px;padding:12px 18px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:4px;font-family:'Share Tech Mono',monospace;font-size:.75rem;color:rgba(255,255,255,.35);text-align:center;letter-spacing:.1em;">
+        ❄ ЛАЙФХАК · Астана — суровые зимы. Тёплую куртку и обувь покупайте заранее.
+      </div>
+    </div>
+  </div>
+
+  <div class="slide shared-slide">
+    <div class="content">
+      <div style="font-family:'Orbitron',monospace;font-size:.65rem;color:rgba(255,255,255,.3);letter-spacing:.2em;margin-bottom:14px;">// ПАКЕТ ДОКУМЕНТОВ · ОБА ВУЗА</div>
+      <div class="slide-title">Чек-лист при зачислении</div>
+      <div class="slide-subtitle">Стандартный набор для всех вузов РК · Оригиналы + Копии</div>
+      <div class="divider"></div>
+      <div class="shared-two-col">
+        <div class="checklist">
+          <div class="chk-item a">
+            <div class="chk-icon">🪪</div>
+            <div class="chk-text">Удостоверение личности<span class="chk-note">Оригинал + 2–3 копии</span></div>
+          </div>
+          <div class="chk-item a">
+            <div class="chk-icon">📜</div>
+            <div class="chk-text">Оригинал аттестата + вкладыш<span class="chk-note">Без вкладыша не принимается</span></div>
+          </div>
+          <div class="chk-item a">
+            <div class="chk-icon">📋</div>
+            <div class="chk-text">Сертификат ЕНТ<span class="chk-note">Скачать с сайта НЦТ</span></div>
+          </div>
+        </div>
+        <div class="checklist">
+          <div class="chk-item m">
+            <div class="chk-icon">🏥</div>
+            <div class="chk-text m">Медицинская справка 075/у<span class="chk-note" style="color:rgba(255,240,200,.3);">Обязательно снимок флюорографии</span></div>
+          </div>
+          <div class="chk-item m">
+            <div class="chk-icon">📷</div>
+            <div class="chk-text m">6 фотографий 3×4<span class="chk-note" style="color:rgba(255,240,200,.3);">Строгий стиль: пиджак/рубашка</span></div>
+          </div>
+          <div class="chk-item m">
+            <div class="chk-icon">🪖</div>
+            <div class="chk-text m">Приписное свидетельство<span class="chk-note" style="color:rgba(255,240,200,.3);">Для парней · Для AITU обязательно</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide shared-slide">
+    <div class="content">
+      <div style="font-family:'Orbitron',monospace;font-size:.65rem;color:rgba(255,255,255,.3);letter-spacing:.2em;margin-bottom:14px;">// МАСТЕР-ПЛАН · ЛЕТО 2026</div>
+      <div class="slide-title">Все дедлайны</div>
+      <div class="slide-subtitle">Не пропусти ни одной даты</div>
+      <div class="divider"></div>
+      <div class="shared-two-col">
+        <div class="table-responsive">
+          <div class="col-head-a">⬡ ГУСТАВ / AITU</div>
+          <table style="width:100%;border-collapse:collapse;font-family:'Share Tech Mono',monospace;font-size:.8rem;">
+            <tr style="border-bottom:1px solid rgba(0,200,255,.12);"><td style="padding:7px 10px 7px 0;color:var(--aitu-primary);white-space:nowrap;">до 1 ИЮЛЯ</td><td style="padding:7px 0;color:rgba(200,230,255,.7);">Сдать AET</td></tr>
+            <tr style="border-bottom:1px solid rgba(0,200,255,.12);"><td style="padding:7px 10px 7px 0;color:var(--aitu-primary);white-space:nowrap;">7 ИЮЛЯ</td><td style="padding:7px 0;color:rgba(200,230,255,.7);">ЕНТ-2</td></tr>
+            <tr style="border-bottom:1px solid rgba(0,200,255,.12);"><td style="padding:7px 10px 7px 0;color:var(--aitu-primary);white-space:nowrap;">13–20 ИЮЛЯ</td><td style="padding:7px 0;color:rgba(200,230,255,.7);">Подача на грант (В057)</td></tr>
+            <tr style="border-bottom:1px solid rgba(0,200,255,.12);"><td style="padding:7px 10px 7px 0;color:var(--aitu-primary);white-space:nowrap;">до 10 АВГ</td><td style="padding:7px 0;color:rgba(200,230,255,.7);">Результаты</td></tr>
+            <tr><td style="padding:7px 10px 7px 0;color:var(--aitu-primary);white-space:nowrap;">до 25 АВГ</td><td style="padding:7px 0;color:rgba(200,230,255,.7);">Зачисление</td></tr>
+          </table>
+        </div>
+        <div class="table-responsive">
+          <div class="col-head-m">⚖ КЕТСУ / MNU</div>
+          <table style="width:100%;border-collapse:collapse;font-family:'Cormorant Garamond',serif;font-size:.95rem;">
+            <tr style="border-bottom:1px solid rgba(255,215,0,.12);"><td style="padding:7px 10px 7px 0;color:var(--mnu-primary);white-space:nowrap;">до 30 ИЮНЯ</td><td style="padding:7px 0;color:rgba(255,240,200,.7);">Внутренний грант MNU</td></tr>
+            <tr style="border-bottom:1px solid rgba(255,215,0,.12);"><td style="padding:7px 10px 7px 0;color:var(--mnu-primary);white-space:nowrap;">нач. ИЮЛЯ</td><td style="padding:7px 0;color:rgba(255,240,200,.7);">ЕНТ-2</td></tr>
+            <tr style="border-bottom:1px solid rgba(255,215,0,.12);"><td style="padding:7px 10px 7px 0;color:var(--mnu-primary);white-space:nowrap;">13–20 ИЮЛЯ</td><td style="padding:7px 0;color:rgba(255,240,200,.7);">Подача на грант</td></tr>
+            <tr style="border-bottom:1px solid rgba(255,215,0,.12);"><td style="padding:7px 10px 7px 0;color:var(--mnu-primary);white-space:nowrap;">до 10 АВГ</td><td style="padding:7px 0;color:rgba(255,240,200,.7);">Результаты</td></tr>
+            <tr><td style="padding:7px 10px 7px 0;color:var(--mnu-primary);white-space:nowrap;">до 25 АВГ</td><td style="padding:7px 0;color:rgba(255,240,200,.7);">Зачисление</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide shared-slide">
+    <div class="content">
+      <div style="font-family:'Orbitron',monospace;font-size:.65rem;color:rgba(255,215,0,.8);letter-spacing:.2em;margin-bottom:14px;">// SPECIAL FOR KETSU</div>
+      <div class="slide-title">Астана: Инсайд-тур от Gustav</div>
+      <div class="slide-subtitle">Университеты и популярные места для времяпровождения</div>
+      <div class="divider"></div>
+      
+      <div class="quote-block" style="border-left-color: #00c8ff; font-family: 'Share Tech Mono', monospace; font-size: 0.9rem;">
+        > Эксклюзивный видеоролик от Gustav для Ketsu по туристическому маршруту столицы. Личный взгляд на кампусы AITU и MNU, а также топовые места для отдыха после учебы. Жми плей!
+      </div>
+
+      <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/dfmrKxh8uSI?si=CgACTTSfM-JQXkYp" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide" style="background:#000;">
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 50%, rgba(10,30,60,.8) 0%, #000 100%);"></div>
+    <div style="position:relative;z-index:5;text-align:center;display:flex;flex-direction:column;align-items:center;gap:24px;">
+      <div style="display:flex;gap:30px;align-items:center;">
+        <div style="font-family:'Orbitron',monospace;font-size:1.8rem;font-weight:900;color:#00c8ff;letter-spacing:.1em;">AITU</div>
+        <div style="font-size:2rem;color:rgba(255,255,255,.2);">×</div>
+        <div style="font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:900;color:#ffd700;letter-spacing:.05em;">MNU</div>
+      </div>
+      <div style="font-family:'Orbitron',monospace;font-size:clamp(1.6rem,3.5vw,2.8rem);font-weight:900;color:#fff;letter-spacing:.08em;line-height:1.2;">
+        АСТАНА<br><span style="font-size:.55em;color:rgba(255,255,255,.3);letter-spacing:.2em;">2026 · ОСЕННИЙ СЕМЕСТР</span>
+      </div>
+      <div style="display:flex;gap:40px;margin-top:8px;">
+        <div style="text-align:center;">
+          <div style="font-family:'Share Tech Mono',monospace;font-size:.65rem;color:rgba(0,200,255,.4);letter-spacing:.2em;">GUSTAV</div>
+          <div style="font-family:'Orbitron',monospace;font-size:1.1rem;color:rgba(0,200,255,.8);">91 → 110+</div>
+        </div>
+        <div style="width:1px;background:rgba(255,255,255,.1);"></div>
+        <div style="text-align:center;">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:.75rem;color:rgba(255,215,0,.4);letter-spacing:.15em;">KETSU</div>
+          <div style="font-family:'Playfair Display',serif;font-size:1.1rem;color:rgba(255,215,0,.8);">108 → 120+</div>
+        </div>
+      </div>
+      <div style="font-family:'Share Tech Mono',monospace;font-size:.72rem;color:rgba(255,255,255,.2);letter-spacing:.18em;margin-top:16px;">
+        МЕТОДИЧНО ЗАКРЫВАЕМ ЭТАПЫ ОДИН ЗА ДРУГИМ.
+      </div>
+    </div>
+  </div>
+
+</div><div class="progress-bar"><div class="progress-fill" id="prog"></div></div>
+
+<div class="nav">
+  <button class="nav-btn" onclick="prev()">◀ НАЗАД</button>
+  <div class="nav-counter" id="ctr">01 / 12</div>
+  <button class="nav-btn" onclick="next()">ВПЕРЁД ▶</button>
+</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const total = slides.length;
+let cur = 0;
+
+function show(i) {
+  slides[cur].classList.remove('active');
+  cur = (i + total) % total;
+  slides[cur].classList.add('active');
+  
+  // Возвращаем скролл наверх при смене слайда
+  slides[cur].scrollTop = 0;
+  
+  document.getElementById('ctr').textContent =
+    String(cur + 1).padStart(2,'0') + ' / ' + String(total).padStart(2,'0');
+  document.getElementById('prog').style.width =
+    ((cur + 1) / total * 100) + '%';
+}
+
+function next() { show(cur + 1); }
+function prev() { show(cur - 1); }
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight') next();
+  if (e.key === 'ArrowLeft')  prev();
+});
+
+// Умный Swipe support (Игнорирует вертикальный скролл)
+let sx = 0;
+let sy = 0;
+
+document.addEventListener('touchstart', e => { 
+  sx = e.changedTouches[0].screenX; 
+  sy = e.changedTouches[0].screenY; 
+});
+
+document.addEventListener('touchend', e => {
+  const dx = e.changedTouches[0].screenX - sx;
+  const dy = e.changedTouches[0].screenY - sy;
+  
+  // Если мы больше сдвинули по горизонтали, чем по вертикали, это свайп слайда
+  if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 50) {
+    if (dx < 0) next();
+    if (dx > 0) prev();
+  }
+});
+
+show(0);
+
+// MATRIX RAIN (Отключено для мобилок в CSS чтобы не тормозило, но работает на ПК)
+function createMatrix(id) {
+  const canvas = document.getElementById(id);
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  function resize() {
+    canvas.width  = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+  }
+  resize();
+  new ResizeObserver(resize).observe(canvas);
+  const chars = '01アイウエオカキク';
+  const fs = 13;
+  let cols, drops;
+  function init() {
+    cols  = Math.floor(canvas.width / fs);
+    drops = Array(cols).fill(1);
+  }
+  init();
+  setInterval(() => {
+    ctx.fillStyle = 'rgba(5,13,26,0.05)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#00c8ff';
+    ctx.font = fs + 'px Share Tech Mono, monospace';
+    for (let i = 0; i < drops.length; i++) {
+      ctx.fillText(chars[Math.floor(Math.random() * chars.length)],
+                   i * fs, drops[i] * fs);
+      if (drops[i] * fs > canvas.height && Math.random() > 0.975) drops[i] = 0;
+      drops[i]++;
+    }
+  }, 60);
+}
+createMatrix('matrix');
+createMatrix('matrix2');
+createMatrix('matrix3');
+</script>
+</body>
+</html>
